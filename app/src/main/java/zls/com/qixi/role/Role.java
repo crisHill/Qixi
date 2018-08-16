@@ -33,4 +33,6 @@ public abstract class Role<T> {
         return contentView;
     }
 
+    public abstract void move(long millis, int fromX, int toX, int fromY, int toY);
+
 }

@@ -46,4 +46,8 @@ public class Stage extends Role<LinearLayout> {
         getContentView().addView(child);
     }
 
+    @Override
+    public void move(long millis, int fromX, int toX, int fromY, int toY) {
+
+    }
 }
