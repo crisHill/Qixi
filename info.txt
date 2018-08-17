@@ -1,0 +1,4 @@
+百度ai sdk：
+    AppID -> 11689126
+    API Key -> DF3EnOsKVqXLz93tAwXrQEDb
+    Secret Key -> AlnEkripY86Xu100Q9jg47118gGE7cMs
