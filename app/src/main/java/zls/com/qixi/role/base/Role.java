@@ -1,4 +1,4 @@
-package zls.com.qixi.role;
+package zls.com.qixi.role.base;
 
 import android.content.Context;
 import android.view.View;

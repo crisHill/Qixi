@@ -7,7 +7,11 @@ import android.widget.RelativeLayout;
 
 
 import zls.com.qixi.R;
-import zls.com.zlibrary.util.ScreenUtil;
+import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.role.base.Role;
+import zls.com.qixi.util.AnimateBgChanger;
+import zls.com.qixi.util.AnimateTranslationer;
+import zls.com.qixi.util.CollectionUtil;
 
 /**
  * Created by oop on 2018/8/16.
@@ -15,13 +19,8 @@ import zls.com.zlibrary.util.ScreenUtil;
 
 public class Stage extends Role<LinearLayout> {
 
-    public static Stage create(Context context){
-        return new Stage(context, ScreenUtil.getScreenWidth(context), ScreenUtil.getScreenHeight(context));
-    }
-
-
     public Stage(Context context, int width, int height) {
-        super(context, width * 2, height, new LinearLayout(context), R.mipmap.bg1, R.mipmap.bg2);
+        super(context,width * 2, height, new LinearLayout(context), R.mipmap.bg1, R.mipmap.bg2);
         init();
     }
 
@@ -48,6 +47,13 @@ public class Stage extends Role<LinearLayout> {
 
     @Override
     public void move(long millis, int fromX, int toX, int fromY, int toY) {
-
+        AnimationParams params = new AnimationParams()
+                .setTarget(contentView)
+                .setDuration(millis)
+                .setStartX(fromX)
+                .setEndX(toX)
+                .setStartY(fromY)
+                .setEndY(toY);
+        AnimateTranslationer.exe(params);
     }
 }

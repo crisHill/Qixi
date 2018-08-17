@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import zls.com.qixi.R;
 import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.role.base.Role;
 import zls.com.qixi.util.AnimateBgChanger;
 import zls.com.qixi.util.AnimateTranslationer;
 import zls.com.qixi.util.CollectionUtil;
@@ -17,11 +18,6 @@ public class Human extends Role<ImageView> {
 
     int noFlowerStill = R.mipmap.boy_no_flower_still;
     Integer[] noFlowerBoyRes = {R.mipmap.boy_no_flower_1, R.mipmap.boy_no_flower_2};
-
-    public static Human create(Context context){
-        return new Human(context, 150, 290);
-    }
-
 
     public Human(Context context, int width, int height) {
         super(context, width, height, new ImageView(context), R.mipmap.boy_no_flower_still);
@@ -40,11 +36,11 @@ public class Human extends Role<ImageView> {
     public void move(long millis, int fromX, int toX, int fromY, int toY) {
         AnimationParams params = new AnimationParams()
                 .setTarget(contentView)
-                .setDuration(8000)
-                .setStartX(200)
-                .setEndX(600)
-                .setStartY(100)
-                .setEndY(200)
+                .setDuration(millis)
+                .setStartX(fromX)
+                .setEndX(toX)
+                .setStartY(fromY)
+                .setEndY(toY)
                 .setRes(CollectionUtil.arr2List(noFlowerBoyRes))
                 .setBgAnimationInterval(300);
         AnimateBgChanger.exe(params);
