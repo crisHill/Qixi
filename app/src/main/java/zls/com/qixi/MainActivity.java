@@ -3,7 +3,6 @@ package zls.com.qixi;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import zls.com.qixi.role.Human;
