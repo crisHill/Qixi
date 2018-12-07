@@ -4,7 +4,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import zls.com.qixi.manager.MsgManager;
+import zls.com.qixi.msg.MsgHelper;
+import zls.com.qixi.msg.MsgType;
 
 public class MainListener implements View.OnTouchListener{
 
@@ -20,7 +21,7 @@ public class MainListener implements View.OnTouchListener{
         }else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
             Log.e("ACTION_UP", "motionEvent.getX() = " + motionEvent.getX());
             if(touchX <= moveLimit && motionEvent.getX() - touchX > moveLimit){
-                MsgManager.getINSTANCE().inform(MsgManager.Type.SHOW_SETTING_UI, null);
+                MsgHelper.getINSTANCE().sendMsg(MsgType.SHOW_SETTING_UI);
             }
 
         }

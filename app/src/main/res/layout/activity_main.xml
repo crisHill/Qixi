@@ -3,34 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root">
-
-    <!--<TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click to init recognizer"
-        android:padding="30dp"
-        android:background="#91a4aa"/>
-
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click to start recognize"
-        android:padding="30dp"
-        android:background="#91a4aa"
-        android:layout_marginTop="100dp"/>
-
-
-
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="click to stop recognize"
-        android:padding="30dp"
-        android:background="#91a4aa"
-        android:layout_marginTop="200dp"/>-->
+    android:id="@+id/root"
+    android:background="#ffffffff">
 
 </FrameLayout>

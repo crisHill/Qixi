@@ -1,4 +1,4 @@
-package zls.com.qixi.role.base;
+package zls.com.qixi.actor;
 
 import android.content.Context;
 import android.view.View;
@@ -10,24 +10,24 @@ import java.util.List;
  * Created by oop on 2018/8/16.
  */
 
-public abstract class Role<T> {
+public abstract class Actor<T extends View> {
 
-    //背景图片
-    protected Context context;
-    protected int width, height;
-    protected List<Integer> drawableResList = new ArrayList<>();
     protected T contentView;
+    protected int width, height, initLeft, initTop;
+    protected Context context;
 
-    public Role(Context context, int width, int height, T contentView, int ... reses){
+    public Actor(Context context, int width, int height, int initLeft, int initTop, T contentView){
         this.context = context;
         this.width = width;
         this.height = height;
+        this.initLeft = initLeft;
+        this.initTop = initTop;
         this.contentView = contentView;
-
-        for (int res : reses){
-            drawableResList.add(res);
-        }
+        init();
     }
+
+    protected abstract void init();
+    public abstract ActorType getActorType();
 
     public T getContentView(){
         return contentView;

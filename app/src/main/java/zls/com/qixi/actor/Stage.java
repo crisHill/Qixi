@@ -1,37 +1,41 @@
-package zls.com.qixi.role;
+package zls.com.qixi.actor;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-
 import zls.com.qixi.R;
 import zls.com.qixi.bean.AnimationParams;
-import zls.com.qixi.role.base.Role;
-import zls.com.qixi.util.AnimateBgChanger;
 import zls.com.qixi.util.AnimateTranslationer;
-import zls.com.qixi.util.CollectionUtil;
+import zls.com.zlibrary.util.ScreenUtil;
 
 /**
  * Created by oop on 2018/8/16.
  */
 
-public class Stage extends Role<LinearLayout> {
+public class Stage extends Actor<LinearLayout> {
 
-    public Stage(Context context, int width, int height) {
-        super(context,width * 2, height, new LinearLayout(context), R.mipmap.bg1, R.mipmap.bg2);
-        init();
+    private int bg1 = R.drawable.bg1;
+    private int bg2 = R.drawable.bg2;
+
+    public Stage(Context context) {
+        super(context, ScreenUtil.getScreenWidth(context) * 2, ScreenUtil.getScreenHeight(context), 0, 0, new LinearLayout(context));
     }
 
-    private void init() {
-        LinearLayout root = getContentView();
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
-        root.setLayoutParams(lp);
-        root.setOrientation(LinearLayout.HORIZONTAL);
+    @Override
+    protected void init() {
+        ViewGroup.MarginLayoutParams lp = new FrameLayout.LayoutParams(width, height);
+        this.contentView.setLayoutParams(lp);
+        this.contentView.setOrientation(LinearLayout.HORIZONTAL);
+        addChild();
+        addChild();
+    }
 
-        addChild();
-        addChild();
+    @Override
+    public ActorType getActorType() {
+        return ActorType.STAGE;
     }
 
     private void addChild(){
@@ -41,8 +45,8 @@ public class Stage extends Role<LinearLayout> {
         RelativeLayout child = new RelativeLayout(context);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width / 2, height);
         child.setLayoutParams(lp);
-        child.setBackgroundResource(drawableResList.get(getContentView().getChildCount()));
-        getContentView().addView(child);
+        child.setBackgroundResource(this.contentView.getChildCount() == 0 ? R.drawable.bg1 : R.drawable.bg2);
+        this.contentView.addView(child);
     }
 
     @Override
