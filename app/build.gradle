@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "zls.com.qixi"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -28,5 +28,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.github.crisHill:ZUtil:1.0'
+    implementation 'com.github.crisHill:ZUtil:b3e45e6dea'
+    implementation files('lib/bdasr_V3_20180801_d6f298a.jar')
 }

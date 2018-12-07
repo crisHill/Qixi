@@ -5,4 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="popupwindow_anim_style_from_left">
+        <item name="android:windowEnterAnimation">@anim/zoomin_left</item>
+        <item name="android:windowExitAnimation">@anim/zoomout_left</item>
+    </style>
+
 </resources>
