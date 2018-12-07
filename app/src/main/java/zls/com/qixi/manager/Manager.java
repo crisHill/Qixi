@@ -60,7 +60,7 @@ public class Manager implements MsgReceiver {
     public void onReceive(MsgType type, Object ... datas) {
 
         switch (type){
-            /*case MsgManager.Type.ASK_TO_FIND_GIRL:
+            /*case :
                 roles.get(RoleType.Stage).move(5000, 0, -ScreenUtil.getScreenWidth(context), 0, 0);
 
                 break;*/

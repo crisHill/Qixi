@@ -7,7 +7,26 @@
     android:background="#dddddd"
     android:padding="5dp">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:text="关闭"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_blue_light"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:layout_above="@id/confirm"/>
+
+    <!--<LinearLayout
         android:id="@+id/btns"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,21 +141,9 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
-
-    <Button
-        android:id="@+id/confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:text="完 成"
-        android:textColor="@android:color/white"
-        android:background="@android:color/holo_blue_light"/>
 
 </RelativeLayout>

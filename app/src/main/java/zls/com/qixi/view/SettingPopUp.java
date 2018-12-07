@@ -1,16 +1,21 @@
 package zls.com.qixi.view;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import zls.com.qixi.R;
-import zls.com.qixi.manager.Const;
-import zls.com.qixi.manager.MsgManager;
+import zls.com.qixi.msg.MsgHelper;
+import zls.com.qixi.msg.MsgType;
 import zls.com.zlibrary.util.ScreenUtil;
 
 /**
@@ -20,18 +25,24 @@ import zls.com.zlibrary.util.ScreenUtil;
 public class SettingPopUp {
 
     private final float WIDTH_RATIO = 0.5F;
+    private final int SPAN = 2;
+    private String[] names = {
+            "显示语音按钮", "隐藏语音按钮",
+            "启动鲜花雨", "停止鲜花雨",
+            "开始音乐", "停止音乐"
+    };
+    private MsgType[] types = {
+            MsgType.SHOW_VOICER, MsgType.HIDE_VOICER,
+            MsgType.START_FLOWER_RAIN, MsgType.STOP_FLOWER_RAIN,
+            MsgType.START_MUSIC, MsgType.STOP_MUSIC
+    };
+
     private Context context;
     private View popView;
     private PopupWindow popupWindow;
     private Button confirm;
 
     private View root;
-
-    private SettingPopUp(Context context, View root){
-        this.context = context;
-        this.root = root;
-        initViews();
-    }
 
     public static SettingPopUp generate(Context context, View root){
         return new SettingPopUp(context, root);
@@ -45,6 +56,11 @@ public class SettingPopUp {
         popupWindow.dismiss();
     }
 
+    private SettingPopUp(Context context, View root){
+        this.context = context;
+        this.root = root;
+        initViews();
+    }
 
     private void initViews() {
 
@@ -56,97 +72,62 @@ public class SettingPopUp {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setAnimationStyle(R.style.popupwindow_anim_style_from_left);
 
-        confirm = (Button) popView.findViewById(R.id.confirm);
-        confirm.setOnClickListener(new View.OnClickListener() {
+        confirm = popView.findViewById(R.id.confirm);
+        confirm.setOnClickListener(view -> hide());
+
+        RecyclerView rv = popView.findViewById(R.id.rv);
+        GridLayoutManager lm = new GridLayoutManager(context, SPAN);
+        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(lm);
+        rv.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void onClick(View view) {
-                hide();
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int position = parent.getChildAdapterPosition(view);
+                if(position >= SPAN){
+                    outRect.top = 60;
+                }
+                if(position % SPAN != 0){
+                    outRect.left = 60;
+                }
             }
         });
-
-        Button hideVoiceButton = (Button) popView.findViewById(R.id.hideVoiceButton);
-        hideVoiceButton.setTag(false);
-        hideVoiceButton.setOnClickListener(clickListener);
-
-        Button startFlower = (Button) popView.findViewById(R.id.startFlower);
-        startFlower.setTag(false);
-        startFlower.setOnClickListener(clickListener);
-
-        Button startMusic = (Button) popView.findViewById(R.id.startMusic);
-        startMusic.setTag(false);
-        startMusic.setOnClickListener(clickListener);
-
-        Button whatToDo = (Button) popView.findViewById(R.id.whatToDo);
-        whatToDo.setOnClickListener(clickListener);
-
-        Button toFindGirl = (Button) popView.findViewById(R.id.toFindGirl);
-        toFindGirl.setOnClickListener(clickListener);
-
-        Button toReachGirl = (Button) popView.findViewById(R.id.toReachGirl);
-        toReachGirl.setOnClickListener(clickListener);
-
-        Button whatToSay = (Button) popView.findViewById(R.id.whatToSay);
-        whatToSay.setOnClickListener(clickListener);
+        rv.setAdapter(new MyAdapter());
 
     }
 
-    private View.OnClickListener clickListener = new View.OnClickListener() {
+    class MyAdapter extends RecyclerView.Adapter<VH>{
+
         @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.confirm:
-                    hide();
-                    break;
-                case R.id.hideVoiceButton:
-                    boolean tag = !(boolean) view.getTag();
-                    view.setTag(tag);
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.HIDE_OR_SHOW_VOICE_BUTTON, tag);
-                    if(tag){
-                        ((Button)view).setText("显示语音按钮");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_NOT_DEFAULT));
-                    }else {
-                        ((Button)view).setText("隐藏语音按钮");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_DEFAULT));
-                    }
-                    break;
-                case R.id.startFlower:
-                    boolean tag2 = !(boolean) view.getTag();
-                    view.setTag(tag2);
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.START_OR_END_FLOWER, tag2);
-                    if(tag2){
-                        ((Button)view).setText("鲜花雨停");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_NOT_DEFAULT));
-                    }else {
-                        ((Button)view).setText("鲜花雨起");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_DEFAULT));
-                    }
-                    break;
-                case R.id.startMusic:
-                    boolean tag3 = !(boolean) view.getTag();
-                    view.setTag(tag3);
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.START_OR_END_MUSIC, tag3);
-                    if(tag3){
-                        ((Button)view).setText("停止音乐");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_NOT_DEFAULT));
-                    }else {
-                        ((Button)view).setText("播放音乐");
-                        view.setBackgroundColor(context.getResources().getColor(Const.Color.SETTINGS_BUTTON_DEFAULT));
-                    }
-                    break;
-                case R.id.whatToDo:
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.ASK_WHAT_TO_DO, null);
-                    break;
-                case R.id.toFindGirl:
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.ASK_TO_FIND_GIRL, null);
-                    break;
-                case R.id.toReachGirl:
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.ASK_TO_REACH_GIRL, null);
-                    break;
-                case R.id.whatToSay:
-                    MsgManager.getINSTANCE().inform(MsgManager.Type.ASK_WHAT_TO_SAY, null);
-                    break;
-            }
+        public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new VH(LayoutInflater.from(context).inflate(R.layout.item_setting_popup, parent, false));
         }
-    };
+
+        @Override
+        public void onBindViewHolder(VH holder, int position) {
+            holder.tv.setText(names[position]);
+            holder.position = position;
+            holder.itemView.setTag(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return names.length;
+        }
+    }
+
+    class VH extends RecyclerView.ViewHolder{
+
+        int position;
+        TextView tv;
+
+        public VH(View itemView) {
+            super(itemView);
+            tv = (TextView) itemView;
+            itemView.setOnClickListener(v -> {
+                int position = (int) v.getTag();
+                MsgHelper.getINSTANCE().sendMsg(types[position]);
+            });
+        }
+    }
 
 }
