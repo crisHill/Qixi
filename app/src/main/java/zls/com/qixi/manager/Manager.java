@@ -1,6 +1,7 @@
 package zls.com.qixi.manager;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import zls.com.qixi.actor.Boy;
@@ -39,6 +40,7 @@ public class Manager implements MsgReceiver {
     private Stage stage;
     private Boy boy;
     private Girl girl;
+    private Voicer voicer;
 
     public void init(Context context, ViewGroup root){
         this.context = context;
@@ -49,21 +51,21 @@ public class Manager implements MsgReceiver {
         stage = new Stage(context);
         boy = new Boy(context);
         girl = new Girl(context);
+        voicer = Voicer.create(context, 200);
 
         root.addView(stage.getContentView());
         root.addView(boy.getContentView());
-        ((ViewGroup)stage.getContentView().getChildAt(0)).addView(girl.getContentView());
-        root.addView(Voicer.create(context, 200));
+        ((ViewGroup)stage.getContentView().getChildAt(1)).addView(girl.getContentView());
+        root.addView(voicer);
     }
 
     @Override
     public void onReceive(MsgType type, Object ... datas) {
 
-        switch (type){
-            /*case :
-                roles.get(RoleType.Stage).move(5000, 0, -ScreenUtil.getScreenWidth(context), 0, 0);
-
-                break;*/
+        if(type == MsgType.SHOW_VOICER){
+            voicer.setVisibility(View.VISIBLE);
+        }else if(type == MsgType.HIDE_VOICER){
+            voicer.setVisibility(View.GONE);
         }
 
     }

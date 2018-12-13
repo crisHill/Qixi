@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import zls.com.qixi.R;
 import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.msg.MsgType;
 import zls.com.qixi.util.AnimateBgChanger;
 import zls.com.qixi.util.AnimateTranslationer;
 import zls.com.qixi.util.CollectionUtil;
@@ -49,5 +50,10 @@ public class Girl extends Actor<ImageView>{
                 .setBgAnimationInterval(300);
         AnimateBgChanger.exe(params);
         AnimateTranslationer.exe(params);
+    }
+
+    @Override
+    public void onReceive(MsgType type, Object... datas) {
+
     }
 }

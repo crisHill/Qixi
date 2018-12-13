@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import zls.com.qixi.R;
 import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.manager.Vars;
+import zls.com.qixi.msg.MsgType;
 import zls.com.qixi.util.AnimateBgChanger;
 import zls.com.qixi.util.AnimateTranslationer;
 import zls.com.qixi.util.CollectionUtil;
@@ -50,5 +52,21 @@ public class Boy extends Actor<ImageView>{
                 .setBgAnimationInterval(300);
         AnimateBgChanger.exe(params);
         AnimateTranslationer.exe(params);
+    }
+
+    @Override
+    public void onReceive(MsgType type, Object... datas) {
+        if(type == MsgType.SCRIPT1_FIND_GIRL){
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)this.contentView.getLayoutParams();
+            /*int fromX = (int) (lp.leftMargin + Vars.stageWidth * 0.25);
+            int toX = (int) (lp.leftMargin + Vars.stageWidth * 0.4);
+            int fromY = (int) (lp.topMargin + Vars.stageWidth * 0.5);
+            int toY = (int) (lp.leftMargin + Vars.stageWidth * 0.5);*/
+            int fromX = (int) ( Vars.stageWidth * 0.25);
+            int toX = (int) (Vars.stageWidth * 0.4);
+            int fromY = lp.topMargin;
+            int toY = lp.topMargin;
+            move(4000, fromX, toX, fromY, toY);
+        }
     }
 }

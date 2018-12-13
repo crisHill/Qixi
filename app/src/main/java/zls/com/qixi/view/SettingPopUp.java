@@ -29,12 +29,14 @@ public class SettingPopUp {
     private String[] names = {
             "显示语音按钮", "隐藏语音按钮",
             "启动鲜花雨", "停止鲜花雨",
-            "开始音乐", "停止音乐"
+            "开始音乐", "停止音乐",
+            "寻找女孩", "走进女孩"
     };
     private MsgType[] types = {
             MsgType.SHOW_VOICER, MsgType.HIDE_VOICER,
             MsgType.START_FLOWER_RAIN, MsgType.STOP_FLOWER_RAIN,
-            MsgType.START_MUSIC, MsgType.STOP_MUSIC
+            MsgType.START_MUSIC, MsgType.STOP_MUSIC,
+            MsgType.SCRIPT1_FIND_GIRL, MsgType.SCRIPT1_REACH_GIRL
     };
 
     private Context context;

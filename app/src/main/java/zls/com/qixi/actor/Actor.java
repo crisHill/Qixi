@@ -6,11 +6,14 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import zls.com.qixi.msg.MsgHelper;
+import zls.com.qixi.msg.MsgReceiver;
+
 /**
  * Created by oop on 2018/8/16.
  */
 
-public abstract class Actor<T extends View> {
+public abstract class Actor<T extends View> implements MsgReceiver{
 
     protected T contentView;
     protected int width, height, initLeft, initTop;
@@ -23,6 +26,7 @@ public abstract class Actor<T extends View> {
         this.initLeft = initLeft;
         this.initTop = initTop;
         this.contentView = contentView;
+        MsgHelper.getINSTANCE().register(this);
         init();
     }
 
@@ -34,5 +38,9 @@ public abstract class Actor<T extends View> {
     }
 
     public abstract void move(long millis, int fromX, int toX, int fromY, int toY);
+
+    public void afterDestroy(){
+        MsgHelper.getINSTANCE().unRegister(this);
+    }
 
 }

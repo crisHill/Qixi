@@ -1,7 +1,5 @@
 package zls.com.qixi.script;
 
-import zls.com.qixi.itf.Script;
-
 /**
  * Created by oop on 2018/8/17.
  */
