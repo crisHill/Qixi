@@ -10,6 +10,7 @@ import zls.com.qixi.actor.Stage;
 import zls.com.qixi.msg.MsgHelper;
 import zls.com.qixi.msg.MsgReceiver;
 import zls.com.qixi.msg.MsgType;
+import zls.com.qixi.util.FlowerManager;
 import zls.com.zlibrary.view.Voicer;
 
 /**
@@ -47,6 +48,7 @@ public class Manager implements MsgReceiver {
         this.root = root;
 
         MsgHelper.getINSTANCE().register(this);
+        FlowerManager.getINSTANCE().init(root, context);
 
         stage = new Stage(context);
         boy = new Boy(context);
