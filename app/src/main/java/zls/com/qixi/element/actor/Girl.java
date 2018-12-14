@@ -1,8 +1,7 @@
-package zls.com.qixi.actor;
+package zls.com.qixi.element.actor;
 
 import android.content.Context;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -30,11 +29,6 @@ public class Girl extends Actor<ImageView>{
         this.contentView.setLayoutParams(lp);
         this.contentView.setScaleType(ImageView.ScaleType.FIT_XY);
         this.contentView.setImageResource(R.drawable.girl_still);
-    }
-
-    @Override
-    public ActorType getActorType() {
-        return ActorType.BOY;
     }
 
     @Override

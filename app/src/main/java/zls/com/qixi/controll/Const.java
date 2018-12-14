@@ -1,4 +1,4 @@
-package zls.com.qixi.manager;
+package zls.com.qixi.controll;
 
 /**
  * Created by oop on 2018/2/9.

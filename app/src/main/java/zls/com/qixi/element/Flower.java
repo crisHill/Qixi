@@ -1,19 +1,21 @@
-package zls.com.qixi.bean;
+package zls.com.qixi.element;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Message;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import zls.com.qixi.R;
-import zls.com.qixi.manager.Const;
-import zls.com.qixi.manager.Vars;
+import zls.com.qixi.controll.Const;
+import zls.com.qixi.controll.Manager;
+import zls.com.qixi.controll.Vars;
 
 /**
  * Created by oop on 2018/2/12.
@@ -21,30 +23,48 @@ import zls.com.qixi.manager.Vars;
 
 public class Flower {
 
-    private int[] res = {
+    private static int[] res = {
             R.drawable.snowflake1,
             R.drawable.snowflake2,
             R.drawable.snowflake3,
             R.drawable.snowflake4,
             R.drawable.snowflake5,
-            R.drawable.snowflake6};
+            R.drawable.snowflake6
+    };
+    private static boolean raining = false;
+
+    public static void start(ViewGroup container){
+        if(raining){
+            return;
+        }
+        raining = true;
+        Observable
+                .interval(Const.FLOWER_CREATE_TIME, TimeUnit.MILLISECONDS)
+                .takeUntil(aLong -> !raining)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onNext -> new Flower(Manager.getInstance().getContext(), container).start());
+    }
+    public static void stop(){
+        raining = false;
+    }
+
+
 
     private Random random;
-    private Context context;
     private ViewGroup container;
     private int sleepTime;
     private ImageView ui;
     private boolean moveRight;
 
-    public Flower(Context context, ViewGroup container){
+    private Flower(Context context, ViewGroup container){
         this.random = new Random();
-        this.context = context;
         this.container = container;
         this.sleepTime = (random.nextInt(4) + 1) * 20 + 100;
 
         Bitmap bg = BitmapFactory.decodeResource(context.getResources(), res[random.nextInt(res.length)]);
         int width = bg.getWidth();
         int height = bg.getHeight();
+
         ui = new ImageView(context);
         ui.setImageBitmap(bg);
         ui.setAlpha((float) (((random.nextInt(80) + 10) * 1.0) / 100));
@@ -57,19 +77,7 @@ public class Flower {
         container.addView(ui);
     }
 
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if(msg.what == Const.MsgWhat.FLOWER_MOVE){
-                ((Flower)msg.obj).moveMe();
-            }else if(msg.what == Const.MsgWhat.CLEAR_FLOWER){
-                ((Flower)msg.obj).clearMe();
-            }
-        }
-    };
-
-    public void moveMe(){
+    private void moveMe(){
         int index = random.nextInt(Const.FLOWER_DIRECTION_CHANGE);
         if(index == 0){//X分之一的概率改变方向
             moveRight = !moveRight;
@@ -90,36 +98,18 @@ public class Flower {
         ui.setRotation(ui.getRotation() + Const.FLOWER_PIVOT_ANGLE);
     }
 
-    public void clearMe(){
+    private void clearMe(){
         container.removeView(ui);
         ui = null;
+        container = null;
     }
 
-    private boolean moveable(){
-        return ui.getY() < Vars.stageHeight;
-    }
-
-    public void start(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (moveable()){
-                    try {
-                        Thread.sleep(sleepTime);
-                        Message msg = Message.obtain();
-                        msg.what = Const.MsgWhat.FLOWER_MOVE;
-                        msg.obj = Flower.this;
-                        handler.sendMessage(msg);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Message msg = Message.obtain();
-                msg.what = Const.MsgWhat.CLEAR_FLOWER;
-                msg.obj = Flower.this;
-                handler.sendMessage(msg);
-            }
-        }).start();
+    private void start(){
+        Observable
+                .interval(sleepTime, TimeUnit.MILLISECONDS)
+                .takeUntil(aLong -> ui.getY() >= Vars.stageHeight)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onNext -> moveMe(), onError -> clearMe(), () -> clearMe());
     }
 
 

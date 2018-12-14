@@ -1,16 +1,16 @@
-package zls.com.qixi.manager;
+package zls.com.qixi.controll;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import zls.com.qixi.actor.Boy;
-import zls.com.qixi.actor.Girl;
-import zls.com.qixi.actor.Stage;
+import zls.com.qixi.element.actor.Boy;
+import zls.com.qixi.element.actor.Girl;
+import zls.com.qixi.element.actor.Stage;
+import zls.com.qixi.element.Flower;
 import zls.com.qixi.msg.MsgHelper;
 import zls.com.qixi.msg.MsgReceiver;
 import zls.com.qixi.msg.MsgType;
-import zls.com.qixi.util.FlowerManager;
 import zls.com.zlibrary.view.Voicer;
 
 /**
@@ -48,7 +48,6 @@ public class Manager implements MsgReceiver {
         this.root = root;
 
         MsgHelper.getINSTANCE().register(this);
-        FlowerManager.getINSTANCE().init(root, context);
 
         stage = new Stage(context);
         boy = new Boy(context);
@@ -68,6 +67,10 @@ public class Manager implements MsgReceiver {
             voicer.setVisibility(View.VISIBLE);
         }else if(type == MsgType.HIDE_VOICER){
             voicer.setVisibility(View.GONE);
+        }else if(type == MsgType.START_FLOWER_RAIN){
+            Flower.start(root);
+        }else if(type == MsgType.STOP_FLOWER_RAIN){
+            Flower.stop();
         }
 
     }

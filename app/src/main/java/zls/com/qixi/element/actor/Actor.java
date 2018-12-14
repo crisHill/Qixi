@@ -1,10 +1,7 @@
-package zls.com.qixi.actor;
+package zls.com.qixi.element.actor;
 
 import android.content.Context;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import zls.com.qixi.msg.MsgHelper;
 import zls.com.qixi.msg.MsgReceiver;
@@ -31,7 +28,6 @@ public abstract class Actor<T extends View> implements MsgReceiver{
     }
 
     protected abstract void init();
-    public abstract ActorType getActorType();
 
     public T getContentView(){
         return contentView;

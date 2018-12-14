@@ -1,4 +1,4 @@
-package zls.com.qixi.manager;
+package zls.com.qixi.controll;
 
 public class Vars {
 

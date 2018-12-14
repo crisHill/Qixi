@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 
 import zls.com.qixi.listener.MainListener;
-import zls.com.qixi.manager.Manager;
+import zls.com.qixi.controll.Manager;
 import zls.com.qixi.msg.MsgHelper;
 import zls.com.qixi.msg.MsgReceiver;
 import zls.com.qixi.msg.MsgType;
