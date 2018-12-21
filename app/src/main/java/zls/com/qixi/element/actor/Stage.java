@@ -7,10 +7,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import zls.com.qixi.R;
+import zls.com.qixi.anim.Animator;
 import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.controll.Const;
 import zls.com.qixi.controll.Vars;
 import zls.com.qixi.msg.MsgType;
 import zls.com.qixi.util.AnimateTranslationer;
+import zls.com.qixi.util.CollectionUtil;
 import zls.com.zlibrary.util.ScreenUtil;
 
 /**
@@ -48,31 +51,19 @@ public class Stage extends Actor<LinearLayout> {
         this.contentView.addView(child);
     }
 
+    /*@Override
+    public void move(long millis, int fromX, int toX, int fromY, int toY) {
+        translate(millis, fromX, toX, fromY, toY);
+    }*/
     @Override
     public void move(long millis, int fromX, int toX, int fromY, int toY) {
-        AnimationParams params = new AnimationParams()
-                .setTarget(contentView)
-                .setDuration(millis)
-                .setStartX(fromX)
-                .setEndX(toX)
-                .setStartY(fromY)
-                .setEndY(toY);
-        AnimateTranslationer.exe(params);
+        Animator.exe(contentView, Const.SCRIPT1_FIND_GIRL_DURATION, 30, 0, -1000, 0, 0, null, null);
     }
 
     @Override
     public void onReceive(MsgType type, Object... datas) {
         if(type == MsgType.SCRIPT1_FIND_GIRL){
-            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)this.contentView.getLayoutParams();
-            /*int fromX = (int) (lp.leftMargin + Vars.stageWidth * 0.25);
-            int toX = (int) (lp.leftMargin + Vars.stageWidth * 0.4);
-            int fromY = (int) (lp.topMargin + Vars.stageWidth * 0.5);
-            int toY = (int) (lp.leftMargin + Vars.stageWidth * 0.5);*/
-            int fromX = lp.leftMargin;
-            int toX = lp.leftMargin - (int) (Vars.stageWidth * 0.5);
-            int fromY = lp.topMargin;
-            int toY = lp.topMargin;
-            move(4000, fromX, toX, fromY, toY);
+            move(Const.SCRIPT1_FIND_GIRL_DURATION, 0, 0 - Vars.stageWidth / 2, 0, 0);
         }
     }
 }

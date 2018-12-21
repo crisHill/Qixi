@@ -117,5 +117,7 @@ public class Const {
         };
     }
 
+    public static final long SCRIPT1_FIND_GIRL_DURATION = 5000;
+
 
 }

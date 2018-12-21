@@ -1,12 +1,21 @@
 package zls.com.qixi.element.actor;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.util.Log;
+import android.util.Property;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import zls.com.qixi.R;
+import zls.com.qixi.anim.Animator;
 import zls.com.qixi.bean.AnimationParams;
+import zls.com.qixi.controll.Const;
 import zls.com.qixi.controll.Vars;
 import zls.com.qixi.msg.MsgType;
 import zls.com.qixi.util.AnimateBgChanger;
@@ -35,34 +44,24 @@ public class Boy extends Actor<ImageView>{
     }
 
 
+   /* @Override
+    public void move(long millis, int fromX, int toX, int fromY, int toY) {
+        translate(millis, fromX, toX, fromY, toY);
+        bgSchedule(millis, 300, CollectionUtil.arr2List(withoutFlowerReses), withFlowerStillRes);
+    }*/
+
     @Override
     public void move(long millis, int fromX, int toX, int fromY, int toY) {
-        AnimationParams params = new AnimationParams()
-                .setTarget(contentView)
-                .setDuration(millis)
-                .setStartX(fromX)
-                .setEndX(toX)
-                .setStartY(fromY)
-                .setEndY(toY)
-                .setRes(CollectionUtil.arr2List(withoutFlowerReses))
-                .setBgAnimationInterval(300);
-        AnimateBgChanger.exe(params);
-        AnimateTranslationer.exe(params);
+        Animator.exe(contentView, Const.SCRIPT1_FIND_GIRL_DURATION, 30,
+                0, 500, 0, 0, CollectionUtil.arr2List(withoutFlowerReses), withoutFlowerStillRes);
     }
 
     @Override
     public void onReceive(MsgType type, Object... datas) {
         if(type == MsgType.SCRIPT1_FIND_GIRL){
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)this.contentView.getLayoutParams();
-            /*int fromX = (int) (lp.leftMargin + Vars.stageWidth * 0.25);
-            int toX = (int) (lp.leftMargin + Vars.stageWidth * 0.4);
-            int fromY = (int) (lp.topMargin + Vars.stageWidth * 0.5);
-            int toY = (int) (lp.leftMargin + Vars.stageWidth * 0.5);*/
-            int fromX = (int) ( Vars.stageWidth * 0.25);
-            int toX = (int) (Vars.stageWidth * 0.4);
-            int fromY = lp.topMargin;
-            int toY = lp.topMargin;
-            move(4000, fromX, toX, fromY, toY);
+            move(Const.SCRIPT1_FIND_GIRL_DURATION,
+                    0, (int) (Vars.stageWidth / 2 * 0.3), lp.topMargin, lp.topMargin);
         }
     }
 }
