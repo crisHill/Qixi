@@ -18,7 +18,7 @@ public class Girl extends Actor<ImageView>{
     private Integer[] turningReses = {R.drawable.girl_turn_1, R.drawable.girl_turn_2, R.drawable.girl_turn_3, R.drawable.girl_turn_4};
 
     public Girl(Context context) {
-        super(context, 150, 290, 500, 200, new ImageView(context));
+        super(context, 150, 290, 900, 300, new ImageView(context));
     }
 
     @Override

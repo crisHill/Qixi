@@ -30,7 +30,7 @@ public class Boy extends Actor<ImageView>{
     private Integer[] withFlowerReses = {R.drawable.boy_with_flower_1, R.drawable.boy_with_flower_2, R.drawable.boy_with_flower_3};
 
     public Boy(Context context) {
-        super(context, 150, 290, 100, 100, new ImageView(context));
+        super(context, 150, 290, 100, 580, new ImageView(context));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Boy extends Actor<ImageView>{
 
     @Override
     public void move(long millis, int fromX, int toX, int fromY, int toY) {
-        Animator.exe(contentView, Const.SCRIPT1_FIND_GIRL_DURATION, 30,
+        Animator.exe(contentView, Const.SCRIPT1_FIND_GIRL_DURATION, 80,
                 0, 500, 0, 0, CollectionUtil.arr2List(withoutFlowerReses), withoutFlowerStillRes);
     }
 
